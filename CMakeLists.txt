@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 include(cmake/HunterGate.cmake)
 
@@ -11,14 +11,22 @@ HunterGate(
 
 project(boost-process)
 
+# hunter_add_package(BoostProcess)
+# find_package(BoostProcess CONFIG REQUIRED)
+
+# hunter_add_package(Boost)
+# find_package(Boost CONFIG REQUIRED)
+# target_link_libraries(... Boost::boost)
+
 hunter_add_package(Boost COMPONENTS system filesystem program_options)
 find_package(Boost CONFIG REQUIRED system filesystem program_options)
 
-hunter_add_package(BoostProcess)
-find_package(BoostProcess CONFIG REQUIRED)
+# hunter_add_package(BoostProcess)
+# find_package(BoostProcess CONFIG REQUIRED)
 
 add_executable(builder ${CMAKE_CURRENT_SOURCE_DIR}/sources/process.cpp)
-target_link_libraries(builder Boost::system Boost::filesystem Boost::program_options BoostProcess::boost_process)
+target_link_libraries(builder Boost::system Boost::filesystem Boost::program_options)
+# target_link_libraries(builder BoostProcess::boost_process)
 
 # install(TARGETS builder
 #     EXPORT builder-config
