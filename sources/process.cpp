@@ -1,39 +1,36 @@
-// 
-// Boost.Process 
-// ~~~~~~~~~~~~~ 
-// 
-// Copyright (c) 2006, 2007 Julio M. Merino Vidal 
-// Copyright (c) 2008 Boris Schaeling 
-// 
-// Distributed under the Boost Software License, Version 1.0. (See accompanying 
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) 
-// 
+#include <boost/process.hpp>
+#include <boost/system/error_code.hpp>
+#include <boost/asio.hpp>
+// #include <boost/process/child.hpp>
+// #include <boost/process/cmd.hpp>
+// #include <boost/process/group.hpp>
+// #include <boost/process/pipe.hpp>
+// #include <boost/process/posix.hpp>
+// #include <boost/process/system.hpp>
+#include <iostream>
+#include <thread>
 
-#include <boost/process.hpp> 
-#include <string> 
-#include <vector> 
+namespace bp = boost::process;
 
-namespace bp = ::boost::process;
-// boost::process::win32_context
+std::vector<std::string> read_outline(std::string & file) {
+	    bp::ipstream is; //reading pipe-stream
+	    bp::child c(bp::search_path("nm"), file, bp::std_out > is);
 
-bp::child start_child() 
-{ 
-    std::string exec = "bjam"; 
+	    std::vector<std::string> data;
+	    std::string line;
 
-    std::vector<std::string> args; 
-    args.push_back("--version"); 
+	    while (c.running() && std::getline(is, line) && !line.empty())
+	        data.push_back(line);
 
-    bp::context ctx; 
-    ctx.stdout_behavior = bp::silence_stream(); 
+	    c.wait();
 
-    return bp::launch(exec, args, ctx); 
-} 
+	    return data;
+	}
 
-int main() 
-{ 
-    bp::child c = start_child(); 
+int main()
+{
+	int result = boost::system("g++ main.cpp");
+	std::cout << result << std::endl;
 
-    bp::status s = c.wait(); 
-
-    return s.exited() ? s.exit_status() : EXIT_FAILURE; 
+	
 }
