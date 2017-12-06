@@ -51,15 +51,15 @@ bp::child Target(std::string inst)
 }
 
 
-int main(int argc, char const* const* argv)
+int main(int argc, char** argv)
 {
     po::options_description desc("Allowed options");
     desc.add_options()
-      ("help, h", "выводим вспомогательное сообщение")
+      ("help", "выводим вспомогательное сообщение")
       ("config", po::value<std::string>(), "указываем конфигурацию сборки (по умолчанию Debug)")
-      ("install", "добавляем этап установки\n(в директорию _install)")
-      ("pack", "добавляем этап упакови\n(в архив формата tar.gz)")
-      ("timeout", po::value<int>(), "указываем время ожидания\n(в секундах)")
+      ("install", "добавляем этап установки (в директорию _install)")
+      ("pack", "добавляем этап упакови (в архив формата tar.gz)")
+      ("timeout", po::value<int>(), "указываем время ожидания (в секундах)")
     ;
 
     po::variables_map vm;
