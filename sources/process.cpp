@@ -53,8 +53,8 @@ bp::child Target(std::string inst)
 
 int main(int argc, char** argv)
 {
-    po::options_description desc("Allowed options");
-    desc.add_options()
+    po::options_paramsription params("Allowed options");
+    params.add_options()
       ("help, h", "выводим вспомогательное сообщение")
       ("config", po::value<std::string>(), "указываем конфигурацию сборки (по умолчанию Debug)")
       ("install", "добавляем этап установки\n(в директорию _install)")
@@ -63,13 +63,13 @@ int main(int argc, char** argv)
     ;
 
     po::variables_map vm;
-    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::store(po::parse_command_line(argc, argv, params), vm);
     po::notify(vm);
 
     int res;
     if(vm.count("help"))
     {
-      std::cout << desc << std::endl;
+      std::cout << params << std::endl;
     }
 
     //  Обрабатываем конфигурацию сборки <Release|Debug>
