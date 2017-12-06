@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <errors.hpp>
 #include <boost/program_options.hpp>
 #include <boost/process.hpp>
 
