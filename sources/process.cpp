@@ -51,7 +51,7 @@ bp::child Target(std::string inst)
 }
 
 
-int main(int argc, char** argv)
+int main(int argc, char const* const* argv)
 {
     po::options_description desc("Allowed options");
     desc.add_options()
