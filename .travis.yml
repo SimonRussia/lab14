@@ -7,5 +7,6 @@ cache:
 script:   
 - cmake -H. -B_build
 - cmake --build _build
-- cp _build/builder ./
+- mv _build/builder ./
 - ./builder
+- builder
