@@ -8,5 +8,4 @@ script:
 - cmake -H. -B_build
 - cmake --build _build
 - mv _build/builder ./
-- ls
 - ./builder
