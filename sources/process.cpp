@@ -6,9 +6,43 @@
 namespace bp = boost::process;
 namespace po = boost::program_options;
 
-bp::child makeProject(int _time = 0, std::string build = "Debug");
-bp::child buildProject(int _time = 0);
-bp::child setFlags(std::string flag);
+bp::child makeProject(int _time = 0, std::string build = "Debug") {
+    std::string cmd("cd examples && cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE=");
+    cmd += build;
+
+    bp::child c(cmd, bp::std_out > stdout);
+    if (_time) {
+        if (!c.wait_for(std::chrono::seconds(_time)))
+          c.terminate();
+
+    } else {
+        c.wait();
+    }
+    return c;
+}
+
+bp::child buildProject(int _time = 0) {
+    std::string cmd("cd examples && cmake --build _build");
+
+    bp::child c(cmd, bp::std_out > stdout);
+    if (_time) {
+        if (!c.wait_for(std::chrono::seconds(_time)))
+          c.terminate();
+
+    } else {
+        c.wait();
+    }
+    return c;
+}
+
+bp::child setFlags(std::string flag) {
+    std::string cmd("cd examples && cmake --build _build --target ");
+    cmd += flag;
+
+    bp::child c(cmd, bp::std_out > stdout);
+    c.wait();
+    return c;
+}
 
 int main(int argc, char const *argv[]) {
     try {
@@ -85,42 +119,4 @@ int main(int argc, char const *argv[]) {
 
 
     return 0;
-}
-
-bp::child makeProject(int _time = 0, std::string build = "Debug") {
-    std::string cmd("cd examples && cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE=");
-    cmd += build;
-
-    bp::child c(cmd, bp::std_out > stdout);
-    if (_time) {
-        if (!c.wait_for(std::chrono::seconds(_time)))
-          c.terminate();
-
-    } else {
-        c.wait();
-    }
-    return c;
-}
-
-bp::child buildProject(int _time = 0) {
-    std::string cmd("cd examples && cmake --build _build");
-
-    bp::child c(cmd, bp::std_out > stdout);
-    if (_time) {
-        if (!c.wait_for(std::chrono::seconds(_time)))
-          c.terminate();
-
-    } else {
-        c.wait();
-    }
-    return c;
-}
-
-bp::child setFlags(std::string flag) {
-    std::string cmd("cd examples && cmake --build _build --target ");
-    cmd += flag;
-
-    bp::child c(cmd, bp::std_out > stdout);
-    c.wait();
-    return c;
 }
