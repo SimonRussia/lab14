@@ -109,7 +109,8 @@ int main(int argc, char const *argv[]) {
         else {
             if (makeProject().exit_code())
                 throw std::runtime_error("ERROR: Make project fail!");
-
+            
+            buildProject();
             std::cout << "Result:\t" << buildProject().exit_code() << std::endl;
         }
 
