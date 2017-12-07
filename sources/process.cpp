@@ -22,7 +22,7 @@ bp::child makeProject(int _time = 0, std::string build = "Debug") {
 }
 
 bp::child buildProject(int _time = 0) {
-    std::string cmd("cmake --build _build");
+    std::string cmd("cmake --build examples/_build");
 
     bp::child c(cmd, bp::std_out > stdout);
     if (_time) {
@@ -36,7 +36,7 @@ bp::child buildProject(int _time = 0) {
 }
 
 bp::child setFlags(std::string flag) {
-    std::string cmd("cmake --build _build --target ");
+    std::string cmd("cmake --build examples/_build --target ");
     cmd += flag;
 
     bp::child c(cmd, bp::std_out > stdout);
