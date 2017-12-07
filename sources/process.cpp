@@ -6,9 +6,9 @@
 namespace bp = boost::process;
 namespace po = boost::program_options;
 
-bp::child makeProject(int, std::string);
-bp::child buildProject(int);
-bp::child setFlags(std::string);
+bp::child makeProject(int _time = 0, std::string build = "Debug");
+bp::child buildProject(int _time = 0);
+bp::child setFlags(std::string flag);
 
 int main(int argc, char const *argv[]) {
     try {
